@@ -4,54 +4,55 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="royal" (click)="presentPopover($event)">
+        <ion-icon name="people"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding style="background-color: #F9F9F9;" #popoverContent class="popover-page">
 
-  <h1 *ngIf="selectedItem">You selected {{selectedItem}}</h1>
-
-  <ion-grid *ngIf="isMobile">
+  <ion-grid>
     <ion-row>
-      <ion-col>
-        <ion-slides>
-          <ion-slide *ngFor="let chart of charts">
-            <h2>{{chart}}</h2>
-            <ion-buttons start>
-              <button ion-button small icon-only>
-                <ion-icon name="arrow-up"></ion-icon>
-              </button>
-              <button ion-button small icon-only>
-                <ion-icon name="arrow-down"></ion-icon>
-              </button>
-            </ion-buttons>
-            <img src="../../assets/chart.png" (click)="filterChart(chart)" style="cursor: pointer;">
-          </ion-slide>
-        </ion-slides>
+      <ion-col col-12 col-xl-4 col-lg-4 col-md-6>
+        <img src="../../assets/gauge.PNG">
       </ion-col>
-
+      <ion-col col-12 col-xl-4 col-lg-4 col-md-6>
+        <img src="../../assets/overview.PNG">
+      </ion-col>
+      <ion-col col-12 col-xl-4 col-lg-4 col-md-6>
+        <img src="../../assets/GainedStats.PNG">
+      </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-grid *ngIf="!isMobile">
+  <div *ngIf="selectedItem">
+    <button ion-button outline icon-start small color="danger" (click)="clearFilter()">
+      <ion-icon name="remove-circle"></ion-icon>
+      Remove "{{selectedItem.title}}" filter
+    </button>
+  </div>
+
+  <ion-grid>
     <ion-row>
-      <ion-col *ngFor="let chart of charts" col-12 col-xl-4 col-lg-4 col-md-6>
-        <ion-card>
-          <ion-item>
-            <h1 text-capitalize style="text-align: center;">{{chart}}</h1>
-          </ion-item>
-          <ion-card-content>
+      <ion-col>
+        <ion-slides pager style="margin-bottom:35px;">
+          <ion-slide *ngFor="let chart of charts" (click)="filterChart(chart)" style="cursor: pointer;">
+            <!-- <h2>{{chart.title}}</h2>
             <ion-buttons start>
-              <button ion-button small icon-only>
+              <button ion-button small icon-only (click)="drillUp(chart)">
                 <ion-icon name="arrow-up"></ion-icon>
               </button>
-              <button ion-button small icon-only>
+              <button ion-button small icon-only (click)="drillDown(chart)">
                 <ion-icon name="arrow-down"></ion-icon>
               </button>
             </ion-buttons>
-            <img src="../../assets/chart.png" (click)="filterChart(chart)" style="cursor: pointer;">
-          </ion-card-content>
-        </ion-card>
+            <p>View: {{chart.view}}</p> -->
+            <img src="../../assets/{{chart.img}}">
+          </ion-slide>
+        </ion-slides>
       </ion-col>
 
     </ion-row>

@@ -9,12 +9,13 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpClientModule } from '@angular/common/http';
+import { FilterPopOverPage } from '../pages/filter-pop-over/filter-pop-over';
 
 @NgModule({
-  declarations: [MyApp, HomePage, ListPage],
+  declarations: [MyApp, HomePage, ListPage, FilterPopOverPage],
   imports: [BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, HomePage, ListPage],
+  entryComponents: [MyApp, HomePage, ListPage, FilterPopOverPage],
   providers: [StatusBar, SplashScreen, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
 export class AppModule {}
