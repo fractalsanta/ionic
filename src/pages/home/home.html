@@ -8,11 +8,53 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <h1 *ngIf="selectedItem">You selected {{selectedItem}}</h1>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <ion-grid *ngIf="isMobile">
+    <ion-row>
+      <ion-col>
+        <ion-slides>
+          <ion-slide *ngFor="let chart of charts">
+            <h2>{{chart}}</h2>
+            <ion-buttons start>
+              <button ion-button small icon-only>
+                <ion-icon name="arrow-up"></ion-icon>
+              </button>
+              <button ion-button small icon-only>
+                <ion-icon name="arrow-down"></ion-icon>
+              </button>
+            </ion-buttons>
+            <img src="../../assets/chart.png" (click)="filterChart(chart)" style="cursor: pointer;">
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="!isMobile">
+    <ion-row>
+      <ion-col *ngFor="let chart of charts" col-12 col-xl-4 col-lg-4 col-md-6>
+        <ion-card>
+          <ion-item>
+            <h1 text-capitalize style="text-align: center;">{{chart}}</h1>
+          </ion-item>
+          <ion-card-content>
+            <ion-buttons start>
+              <button ion-button small icon-only>
+                <ion-icon name="arrow-up"></ion-icon>
+              </button>
+              <button ion-button small icon-only>
+                <ion-icon name="arrow-down"></ion-icon>
+              </button>
+            </ion-buttons>
+            <img src="../../assets/chart.png" (click)="filterChart(chart)" style="cursor: pointer;">
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
