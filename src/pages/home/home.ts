@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform, Slides } from 'ionic-angular';
 import { PopoverController } from 'ionic-angular';
 import { FilterPopOverPage } from '../../pages/filter-pop-over/filter-pop-over';
+import { LoadingController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -18,13 +19,40 @@ export class HomePage {
   selectedItem: any;
   isMobile: boolean;
 
+  @ViewChild(Slides)
+  slides: Slides;
+
   @ViewChild('popoverContent', { read: ElementRef })
   content: ElementRef;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, platform: Platform, public popoverCtrl: PopoverController) {
+  loadedTabs: number[] = [0];
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    platform: Platform,
+    public popoverCtrl: PopoverController,
+    public loadingCtrl: LoadingController
+  ) {
     this.selectedItem = navParams.get('chart');
     if (platform.is('mobile')) {
       this.isMobile = true;
+    }
+  }
+
+  slideChanged(slide) {
+    if (this.loadedTabs.indexOf(slide.getActiveIndex()) < 0) {
+      const loader = this.loadingCtrl.create({
+        content: 'Please wait...'
+      });
+
+      loader.present();
+
+      setTimeout(() => {
+        let currentIndex = this.slides.getActiveIndex();
+        this.loadedTabs.push(currentIndex);
+        loader.dismiss();
+      }, 500);
     }
   }
 
@@ -39,19 +67,10 @@ export class HomePage {
   }
 
   filterChart(item) {
-    // this.navCtrl.push(HomePage, { chart: item });
     this.selectedItem = item;
   }
 
   clearFilter() {
     this.selectedItem = null;
-  }
-
-  drillUp(item) {
-    item.view = 'Year';
-  }
-
-  drillDown(item) {
-    item.view = 'Month';
   }
 }

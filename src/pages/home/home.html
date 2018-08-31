@@ -38,19 +38,11 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-slides pager style="margin-bottom:35px;">
-          <ion-slide *ngFor="let chart of charts" (click)="filterChart(chart)" style="cursor: pointer;">
-            <!-- <h2>{{chart.title}}</h2>
-            <ion-buttons start>
-              <button ion-button small icon-only (click)="drillUp(chart)">
-                <ion-icon name="arrow-up"></ion-icon>
-              </button>
-              <button ion-button small icon-only (click)="drillDown(chart)">
-                <ion-icon name="arrow-down"></ion-icon>
-              </button>
-            </ion-buttons>
-            <p>View: {{chart.view}}</p> -->
-            <img src="../../assets/{{chart.img}}">
+        <ion-slides pager style="margin-bottom:35px;" (ionSlideDidChange)="slideChanged($event)">
+          <ion-slide *ngFor="let chart of charts; let i = index" (click)="filterChart(chart)" style="cursor: pointer;">
+
+            <page-chart *ngIf="loadedTabs.indexOf(i) > -1" [img]="chart.img"></page-chart>
+
           </ion-slide>
         </ion-slides>
       </ion-col>

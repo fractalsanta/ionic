@@ -10,12 +10,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpClientModule } from '@angular/common/http';
 import { FilterPopOverPage } from '../pages/filter-pop-over/filter-pop-over';
+import { ChartPage } from '../pages/chart/chart';
 
 @NgModule({
-  declarations: [MyApp, HomePage, ListPage, FilterPopOverPage],
+  declarations: [MyApp, HomePage, ListPage, FilterPopOverPage, ChartPage],
   imports: [BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, HomePage, ListPage, FilterPopOverPage],
+  entryComponents: [MyApp, HomePage, ListPage, FilterPopOverPage, ChartPage],
   providers: [StatusBar, SplashScreen, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
 export class AppModule {}
