@@ -1,25 +1,47 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { NavController, NavParams, Platform, IonicPage, Slides } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+@IonicPage({
+  segment: ':chart/:dateFilter'
+})
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  charts: string[] = ['Chart 1', 'Chart 2', 'Chart 3', 'Chart 4', 'Chart 5', 'Chart 6'];
+  @ViewChild(Slides)
+  slides: Slides;
+
+  charts: string[] = ['1', '2', '3', '4', '5', '6'];
   selectedItem: any;
   isMobile: boolean;
+  dateFilter: Date;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, platform: Platform) {
-    this.selectedItem = navParams.get('chart');
+    console.log(this.navParams);
+    this.selectedItem = this.navParams.get('chart');
+    this.dateFilter = this.navParams.get('dateFilter');
+
     if (platform.is('mobile')) {
       this.isMobile = true;
     }
   }
 
+  public goToSlide(index: number) {
+    this.slides.slideTo(index - 1, 500);
+  }
+
+  ionViewDidEnter() {
+    this.goToSlide(this.selectedItem);
+  }
+
   filterChart(item) {
-    this.navCtrl.push(HomePage, { chart: item });
+    this.navCtrl.push(HomePage, { chart: item, dateFilter: this.dateFilter });
+  }
+
+  applyFilter(filterDate) {
+    this.dateFilter = filterDate;
   }
 }

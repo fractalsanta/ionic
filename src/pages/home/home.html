@@ -9,14 +9,23 @@
 
 <ion-content padding>
 
-  <h1 *ngIf="selectedItem">You selected {{selectedItem}}</h1>
+  <ion-item>
+    <ion-label>Date filter</ion-label>
+    <ion-datetime displayFormat="MMMM DD YYYY" pickerFormat="MMMM DD YYYY" [(ngModel)]="dateFilter" (change)="applyFilter(dateFilter)"
+      (ngModelChange)="applyFilter(dateFilter)"></ion-datetime>
+  </ion-item>
+  <h1 *ngIf="dateFilter">You filtered by Date {{dateFilter}}
+    <button (click)="applyFilter(null); filterChart(selectedItem);">Clear</button>
+  </h1>
 
-  <ion-grid *ngIf="isMobile">
+  <h1 *ngIf="selectedItem">You selected Chart {{selectedItem}}</h1>
+
+  <ion-grid>
     <ion-row>
       <ion-col>
         <ion-slides>
           <ion-slide *ngFor="let chart of charts">
-            <h2>{{chart}}</h2>
+            <h2>Chart {{chart}}</h2>
             <ion-buttons start>
               <button ion-button small icon-only>
                 <ion-icon name="arrow-up"></ion-icon>
